@@ -11,14 +11,14 @@ API_METHODS = {
 }
 
 
-def get_database_objects(object_type) -> dict:
+def get_database_objects(object_type: str) -> dict:
     query = """select json_object_agg(d.contractor_id, d.id)::jsonb from(
             select contractor_id, id from smart_transport.{}) d;"""
     result = session.execute(query.format(object_type)).fetchone()[0]
     return result
 
 
-def get_objects(object_type):
+def get_objects(object_type: str):
     LOGGER.info(f'{datetime.now()}: receiving {object_type}')
     
     json = {
